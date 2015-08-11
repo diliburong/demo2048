@@ -20,3 +20,16 @@ function showNumberWithAnimation(i,j,randNumber) {
     },50);
 
 }
+
+function showMoveAnimation(formx,fomry,tox,toy){
+	
+	var numberCell=$('#number-cell-'+formx+'-'+fomry);
+	numberCell.animate({
+		top:getPosTop(tox,toy),
+		left:getPosLeft(tox,toy)
+	},200);
+}
+
+function updataScore(score){
+	$('#score').text(score);
+}
