@@ -42,6 +42,7 @@ function init(){
     updateBoardView();
 
     score=0;
+    updataScore(score);
 }
 
  function updateBoardView(){
