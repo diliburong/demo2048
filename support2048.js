@@ -2,12 +2,18 @@
  * Created by liuyubobobo on 14-4-11.
  * my site: http://www.liuyubobobo.com
  */
+documentWidth=window.screen.availWidth;//获取当前设备可使用的宽度
+gridContainerWidth=0.92*documentWidth;
+cellSideLength=0.18*documentWidth;//小方块边长
+cellSpace=0.04*documentWidth;//小方块间距
+
+
 function getPosTop( i , j ){
-    return 20 + i*120;
+    return cellSpace + i*(cellSpace+cellSideLength);
 }
 
 function getPosLeft( i , j ){
-    return 20 + j*120;
+    return cellSpace + j*(cellSpace+cellSideLength);
 }
 
 function getNumberBackgroundColor(number){
