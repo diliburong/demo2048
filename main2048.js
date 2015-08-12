@@ -8,6 +8,11 @@ var score = 0;
 
 var hasConflicted = new Array();
 
+var startx=0;
+var starty=0;
+var endx=0;
+var endy=0;
+
 $(document).ready(function(){
     prepareForMobile();
     newgame();
@@ -15,12 +20,14 @@ $(document).ready(function(){
 
 function prepareForMobile(){
 
+    //适应大屏幕
     if(documentWidth>500){
         gridContainerWidth=500;
         cellSpace=20;
         cellSideLength=100;
     }
 
+    //适应手机屏幕
     $('#grid-container').css('width',gridContainerWidth-2*cellSpace);
     $('#grid-container').css('height',gridContainerWidth-2*cellSpace);
     $('#grid-container').css('padding',cellSpace);
@@ -128,26 +135,32 @@ function generateOneNumber(){
 }
 
 $(document).keydown(function(event){
+   //阻挡默认的效果
+
     switch(event.keyCode){
         case 37:   //left
+         event.preventDefault();
             if(moveLeft() ){
                 setTimeout("generateOneNumber()",210);
                 setTimeout("isgameover()",300);
             }
             break;
         case 38:   //up
+         event.preventDefault();
             if(moveUp() ){
                 setTimeout("generateOneNumber()",210);
                 setTimeout("isgameover()",300);
             }
             break;          
         case 39:   //right
+         event.preventDefault();
             if(moveRight() ){
                 setTimeout("generateOneNumber()",210);
                 setTimeout("isgameover()",300);
             }
             break;  
         case 40:   //down
+         event.preventDefault();
             if(moveDown() ){
                 setTimeout("generateOneNumber()",210);
                 setTimeout("isgameover()",300);
@@ -158,6 +171,72 @@ $(document).keydown(function(event){
 
     }
 });
+
+
+//默认传入的event参数，之中有触摸相关相关的数据
+//有一个数组event.touches
+//event.changedTouchese 改变后的信息，触摸结束
+document.addEventListener('touchstart',function(event){
+    startx=event.touches[0].pageX;
+    starty=event.touches[0].pageY;
+
+});
+
+document.addEventListener('touchend',function(event){
+    endx=event.changedTouches[0].pageX;
+    endy=event.changedTouches[0].pageY;
+
+    var deltax=endx-startx;
+    var deltay=endy-starty;
+
+
+//防止点击就产生移动
+    if(Math.abs(deltax)<0.3*documentWidth&&Math.abs(deltay)<0.3*documentWidth)
+        return;
+
+
+//x
+    if (Math.abs(deltax)>=Math.abs(deltay)) {
+        if (deltax>0){
+            //move right
+             if(moveRight() ){
+                setTimeout("generateOneNumber()",210);
+                setTimeout("isgameover()",300);
+            }
+        }
+
+        else{
+            //move left
+            if(moveLeft() ){
+                setTimeout("generateOneNumber()",210);
+                setTimeout("isgameover()",300);
+            }
+        }
+
+    }
+//y
+    else{
+
+        if(deltay>0){
+            //move down
+             if(moveDown() ){
+                setTimeout("generateOneNumber()",210);
+                setTimeout("isgameover()",300);
+            }
+        }
+        else{
+            //move up
+             if(moveUp() ){
+                setTimeout("generateOneNumber()",210);
+                setTimeout("isgameover()",300);
+            }
+        }
+    }
+});
+
+
+
+
 
 function isgameover(){
     if(nospace(board)&&nomove(board)){
