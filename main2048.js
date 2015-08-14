@@ -173,6 +173,10 @@ $(document).keydown(function(event){
 });
 
 
+document.addEventListener('touchmove',function(event){
+         event.preventDefault();
+
+})
 //默认传入的event参数，之中有触摸相关相关的数据
 //有一个数组event.touches
 //event.changedTouchese 改变后的信息，触摸结束
@@ -191,7 +195,7 @@ document.addEventListener('touchend',function(event){
 
 
 //防止点击就产生移动
-    if(Math.abs(deltax)<0.3*documentWidth&&Math.abs(deltay)<0.3*documentWidth)
+    if(Math.abs(deltax)<0.2*documentWidth&&Math.abs(deltay)<0.2*documentWidth)
         return;
 
 
